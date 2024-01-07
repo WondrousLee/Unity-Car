@@ -8,7 +8,6 @@ public class FollowPlayer : MonoBehaviour
     public GameObject player; //refers to player selected in Unity
     private UnityEngine.Vector3 offset = new UnityEngine.Vector3(0, 4, -13);
     
-    
     // Start is called before the first frame update
     void Start()
     {
@@ -24,6 +23,20 @@ public class FollowPlayer : MonoBehaviour
     {
         //so it's just transforming position of camera depending on player (car) postion
         //Additionally offset this by Vector3 (x: +(0), y: +(5), z:+(-10))
-        transform.position = player.transform.position + offset;
+
+
+        //Ah yes, so i thought about it wrong, you don't want to rotate this
+        // beacuse it stays behind player
+        // you want to MOVE camera behind player!
+
+        // transform.rotation = player.transform.rotation;
+
+        UnityEngine.Quaternion cameraRotation = player.transform.rotation;
+        //Quaternion in VERY basic terms is a Vector3 but for rotation of object.
+
+        transform.rotation = cameraRotation;
+        transform.position = player.transform.position + player.transform.rotation * offset;
+        // p.t.rotation * offset rotates the OFFSET to the correct position everytime player turns
+        
     }
 }
