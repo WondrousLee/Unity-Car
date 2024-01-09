@@ -14,8 +14,8 @@ public class PlayerController : MonoBehaviour
 
     private float speed = 25.0f;
     private float turnSpeed = 40f;
-    private float horizontalInput;
-    private float verticalInput;
+    public float horizontalInput;
+    public float verticalInput;
     // Update is called once per frame
     void Update()
     {
