@@ -1,16 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Security;
 using UnityEngine;
 
 public class animationController : MonoBehaviour
 {
 
+    public GameObject player;
     public GameObject wheel_fl;
     public GameObject wheel_fr;
     public GameObject wheel_rl;
     public GameObject wheel_rr;
 
-    private float wheelSpeed = 23f;
+    //import currentSpeed for animations.
+    private float RotationSpeed = 5f;
     private PlayerController playerController;
     // Start is called before the first frame update
     void Start()
@@ -22,17 +25,18 @@ public class animationController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //rotate wheels while riding forward.
-        float verticalInput = playerController.verticalInput;
-        wheel_fl.transform.Rotate(wheelSpeed * verticalInput, 0, 0);
-        wheel_fr.transform.Rotate(wheelSpeed * verticalInput, 0, 0);
-        wheel_rl.transform.Rotate(wheelSpeed * verticalInput, 0, 0);
-        wheel_rr.transform.Rotate(wheelSpeed * verticalInput, 0, 0);
 
-        float horizontalInput = playerController.horizontalInput;
 
-        //rotate wheels while turning
-        //Probably the most unoptimized sh*t you'll ever see.
+        // transform.Translate(Vector3.forward * Time.deltaTime * CurrentSpeed, Space.Self);
+
+        // if (CurrentSpeed < 0)
+        // {
+        //     CurrentSpeed += 1f * Time.deltaTime;
+        // }
+        // else
+        // {
+        //     CurrentSpeed -= 1f * Time.deltaTime;
+        // }
 
         //also could not finish, some issue with not correctly rotating, i might've been too tired to see what im doing, yes!
 
@@ -43,14 +47,15 @@ public class animationController : MonoBehaviour
         //     wheel_fl.transform.Rotate(0, wheelSpeed * horizontalInput, 0);
         //     wheel_fr.transform.Rotate(0, wheelSpeed * horizontalInput, 0);
         // }
-        // else if (wheel_fr.transform.rotation.eulerAngles.y != 0 || wheel_fl.transform.rotation.eulerAngles.y != 0)
+
+        // if (Input.GetKey(KeyCode.A))
         // {
-        //     wheel_fl.transform.rotation = new Quaternion(0, 0, 0, 0);
-        //     wheel_fl.transform.rotation = new Quaternion(0, 0, 0, 0); // Resets to original rotation
+        //     wheel_fl.transform.Rotate(Vector3.up * Time.deltaTime * -RotationSpeed, Space.Self);
         // }
-        // else
+
+        // if (Input.GetKey(KeyCode.D))
         // {
-        //     Debug.Log("Do not do stuff!");
+        //     wheel_fl.transform.Rotate(Vector3.up * Time.deltaTime * RotationSpeed, Space.Self);
         // }
     }
 }
