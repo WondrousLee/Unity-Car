@@ -7,15 +7,8 @@ using UnityEngine.Jobs;
 public class PlayerController : MonoBehaviour
 {
     // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-    private float turnSpeed = 15f;
-
-    //Change later to private (inputs)
-    public float horizontalInput;
-    public float verticalInput;
+    private float horizontalInput;
+    private float verticalInput;
 
     //This might need to be Public for later on.
     public float CurrentSpeed = 0f;
@@ -31,11 +24,14 @@ public class PlayerController : MonoBehaviour
     private float maxTurnSpeed = 20f;
     private float minTurnSpeed = 40f;
     private float maxSpeed = 60f;
-    void Update()
+    
+    void Start()
     {
 
-
-        //Move the vehicle forward! && Turn the vehicle by rotating object
+    }
+    void Update()
+    {
+        //Move the vehicle forward && Turn the vehicle by rotating object
         float adjustedTurnSpeed = Mathf.Lerp(minTurnSpeed, maxTurnSpeed, CurrentSpeed / maxSpeed); //feels good right now.
         //Except for when you try to rotate vehicle when it's only starting, then it feels
         //weird a little bit because suddenly you can do full rotation at 0.2 speed (let's say 20 km/h?)
@@ -46,7 +42,7 @@ public class PlayerController : MonoBehaviour
         if (CurrentSpeed < 0)
         {
             transform.Translate(UnityEngine.Vector3.forward * Time.deltaTime * CurrentSpeed * speedBackwardsPower);
-            CurrentSpeed += 0.25f* Time.deltaTime;
+            CurrentSpeed += 0.25f * Time.deltaTime;
         }
         else
         {
@@ -55,8 +51,9 @@ public class PlayerController : MonoBehaviour
         }
         if (verticalInput > 0)
         {
-            if (CurrentSpeed*10 <= maxSpeed){
-            CurrentSpeed += Time.deltaTime;
+            if (CurrentSpeed * 10 <= maxSpeed)
+            {
+                CurrentSpeed += Time.deltaTime;
             }
         }
         if (verticalInput < 0)
@@ -64,8 +61,9 @@ public class PlayerController : MonoBehaviour
             CurrentSpeed -= Time.deltaTime * breakPower;
         }
         //When car is stationary you cannot turn it!
-        if (CurrentSpeed > 0.1 || CurrentSpeed < -0.1){
-            transform.Rotate (0, Time.deltaTime * horizontalInput * adjustedTurnSpeed, 0);
+        if (CurrentSpeed > 0.05 || CurrentSpeed < -0.05)
+        {
+            transform.Rotate(0, Time.deltaTime * horizontalInput * adjustedTurnSpeed, 0);
         }
         //Debug.Log(CurrentSpeed); //i won't add speedometer, it's small project, don't want to over-scope it
     }

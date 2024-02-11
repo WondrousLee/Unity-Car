@@ -2,60 +2,50 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Security;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class animationController : MonoBehaviour
 {
 
     public GameObject player;
-    public GameObject wheel_fl;
-    public GameObject wheel_fr;
-    public GameObject wheel_rl;
-    public GameObject wheel_rr;
+    public GameObject[] wheelsSpinning;
 
-    //import currentSpeed for animations.
-    private float RotationSpeed = 5f;
+    //import 
+    private float RotationSpeed = 300f;
     private PlayerController playerController;
     // Start is called before the first frame update
     void Start()
     {
+        // Gets player component PlayerController
         playerController = GetComponent<PlayerController>();
 
+        // Checks if playercontroller is found, otherwise log it!
+        if (playerController == null)
+        {
+            Debug.Log("PlayerController - component not found on: 'Veh_Ute_Red_Z'");
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
+        foreach (GameObject wheels in wheelsSpinning)
+        {
+            if (wheels != null) // To avoid errors when it's not detected or destroyed or sth
+            {
+                //Rotating wheels when vehicle is moving forward (check speed)
+                if (playerController.CurrentSpeed < -0.005)
+                {
+                    wheels.transform.Rotate(Vector3.left * Time.deltaTime * -RotationSpeed * playerController.CurrentSpeed, Space.Self);
+                }
 
-
-        // transform.Translate(Vector3.forward * Time.deltaTime * CurrentSpeed, Space.Self);
-
-        // if (CurrentSpeed < 0)
-        // {
-        //     CurrentSpeed += 1f * Time.deltaTime;
-        // }
-        // else
-        // {
-        //     CurrentSpeed -= 1f * Time.deltaTime;
-        // }
-
-        //also could not finish, some issue with not correctly rotating, i might've been too tired to see what im doing, yes!
-
-        // if (wheel_fl.transform.rotation.eulerAngles.y >= -80 && wheel_fr.transform.rotation.eulerAngles.y >= -80
-        //  && wheel_fl.transform.rotation.eulerAngles.y <= 80 && wheel_fr.transform.rotation.eulerAngles.y <= 80 
-        //  && horizontalInput != 0)
-        // {
-        //     wheel_fl.transform.Rotate(0, wheelSpeed * horizontalInput, 0);
-        //     wheel_fr.transform.Rotate(0, wheelSpeed * horizontalInput, 0);
-        // }
-
-        // if (Input.GetKey(KeyCode.A))
-        // {
-        //     wheel_fl.transform.Rotate(Vector3.up * Time.deltaTime * -RotationSpeed, Space.Self);
-        // }
-
-        // if (Input.GetKey(KeyCode.D))
-        // {
-        //     wheel_fl.transform.Rotate(Vector3.up * Time.deltaTime * RotationSpeed, Space.Self);
-        // }
+                if (playerController.CurrentSpeed > 0.005)
+                {
+                    wheels.transform.Rotate(Vector3.right * Time.deltaTime * RotationSpeed * playerController.CurrentSpeed, Space.Self);
+                }
+            }
+            //I would add rotation on steering left and right but don't know how.
+            //It breaks whole animation when i do that ;/
+        }
     }
 }
