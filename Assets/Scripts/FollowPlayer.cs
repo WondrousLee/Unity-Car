@@ -10,26 +10,21 @@ public class FollowPlayer : MonoBehaviour
     //Default Camera behind player.
     private int currentChoice = 0;
     // Start is called before the first frame update
+
+    UnityEngine.Vector3[] arrCamerasRedTruck = new [] {new UnityEngine.Vector3(0, 4, -13), new UnityEngine.Vector3(0.03f, 1.72f, 3.02f), new UnityEngine.Vector3(-0.031f, 1f, 4.491f)};
     void Start()
     {
 
     }
-
-
     void Update()
     {
-        if (Input.GetButtonDown("CameraSwitch"))
+        if (Input.GetButtonDown("Fire1"))
         {
             currentChoice++;
-            switch (currentChoice)
-            {
-                case 0:
-                    offset = new UnityEngine.Vector3(0, 4, -13);
-                    break;
-                case 1:
-                    offset = new UnityEngine.Vector3(0.03f, 1.72f, 3.02f);
-                    break;
+            if (currentChoice == 3){
+                currentChoice = 0;
             }
+            offset = arrCamerasRedTruck[currentChoice];
         }
     }
         // Update is called once per frame
