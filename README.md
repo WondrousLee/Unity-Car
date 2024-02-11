@@ -1,1 +1,1 @@
-Nothing special really... just saving what i've already done in Unity 3D official tutorials
+I've started making it using Unity Learn as a base, then i changed it into something mine (changed few thing this and there)
